@@ -1,0 +1,22 @@
+{
+    Filter = {
+        Classes = (
+            "AVCaptureSession",
+            "AVCaptureVideoDataOutput",
+            "AVCaptureVideoPreviewLayer"
+        );
+        Bundles = (
+            "com.apple.camera",
+            "com.apple.facetime",
+            "com.apple.mobilephone",
+            "com.hammerandchisel.discord",
+            "com.toyopagroup.picaboo",
+            "com.zhiliaoapp.musically",
+            "com.burbn.instagram",
+            "com.facebook.Facebook",
+            "com.skype.skype",
+            "com.google.ios.meets",
+            "us.zoom.videomeetings"
+        );
+    };
+}

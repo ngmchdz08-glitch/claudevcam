@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+
+		<!-- ══════ MAIN SWITCH ══════ -->
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>🎥 WeatCam Virtual Camera</string>
+			<key>footerText</key>
+			<string>Hook sâu AVCaptureSession — thay thế feed camera bằng video / ảnh / OBS stream</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.weat.vcamera</string>
+			<key>key</key>
+			<string>Enabled</string>
+			<key>label</key>
+			<string>Bật Virtual Camera</string>
+			<key>PostNotification</key>
+			<string>com.weat.vcamera/ReloadPrefs</string>
+		</dict>
+
+		<!-- ══════ VIDEO SOURCE ══════ -->
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>📹 Nguồn Video</string>
+			<key>footerText</key>
+			<string>Chọn file video MP4 từ thiết bị hoặc nhập đường dẫn thủ công</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.weat.vcamera</string>
+			<key>key</key>
+			<string>ImageMode</string>
+			<key>label</key>
+			<string>Dùng Ảnh Tĩnh Thay Video</string>
+			<key>PostNotification</key>
+			<string>com.weat.vcamera/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>pickVideo</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>📂  Chọn Video Từ Thiết Bị...</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>default</key>
+			<string>/var/mobile/Media/DCIM/weat_virtual.mp4</string>
+			<key>defaults</key>
+			<string>com.weat.vcamera</string>
+			<key>key</key>
+			<string>VideoPath</string>
+			<key>label</key>
+			<string>Đường Dẫn Video:</string>
+			<key>PostNotification</key>
+			<string>com.weat.vcamera/ReloadPrefs</string>
+		</dict>
+
+		<!-- ══════ IMAGE SOURCE ══════ -->
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>🖼 Nguồn Ảnh Tĩnh</string>
+			<key>footerText</key>
+			<string>Khi bật "Dùng Ảnh Tĩnh", ảnh này sẽ được dùng thay video</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>pickImage</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>🖼  Chọn Ảnh Từ Photos...</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>default</key>
+			<string></string>
+			<key>defaults</key>
+			<string>com.weat.vcamera</string>
+			<key>key</key>
+			<string>ImagePath</string>
+			<key>label</key>
+			<string>Đường Dẫn Ảnh:</string>
+			<key>PostNotification</key>
+			<string>com.weat.vcamera/ReloadPrefs</string>
+		</dict>
+
+		<!-- ══════ OBS / NETWORK ══════ -->
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>📡 OBS / Network Stream</string>
+			<key>footerText</key>
+			<string>Nhận frame từ OBS qua TCP socket. OBS cần plugin WeatCam Sender chạy trên PC.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.weat.vcamera</string>
+			<key>key</key>
+			<string>NetworkMode</string>
+			<key>label</key>
+			<string>Dùng OBS / Network Mode</string>
+			<key>PostNotification</key>
+			<string>com.weat.vcamera/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>connectOBS</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>🔌  Cấu Hình Địa Chỉ OBS...</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>default</key>
+			<string>192.168.1.100:8080</string>
+			<key>defaults</key>
+			<string>com.weat.vcamera</string>
+			<key>key</key>
+			<string>ServerIP</string>
+			<key>label</key>
+			<string>IP:Port Server:</string>
+			<key>PostNotification</key>
+			<string>com.weat.vcamera/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>testConnection</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>🧪  Test Kết Nối OBS</string>
+		</dict>
+
+		<!-- ══════ ABOUT ══════ -->
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>ℹ️ Thông Tin</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Phiên Bản</string>
+			<key>value</key>
+			<string>2.0 — roothide</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Tác Giả</string>
+			<key>value</key>
+			<string>Weat</string>
+		</dict>
+
+	</array>
+	<key>title</key>
+	<string>WeatCam</string>
+</dict>
+</plist>
