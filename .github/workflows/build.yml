@@ -1,0 +1,80 @@
+name: 🎥 Build WeatVCamera
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-13
+    timeout-minutes: 45
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────────────
+      - name: 📦 Checkout Code
+        uses: actions/checkout@v4
+
+      # ── 2. Install ldid & dpkg ───────────────────────────────────
+      - name: ⚙️ Cài đặt ldid & dpkg
+        run: |
+          brew install ldid dpkg
+
+      # ── 3. Cache Theos ───────────────────────────────────────────
+      - name: 💾 Cache Theos
+        id: cache-theos
+        uses: actions/cache@v4
+        with:
+          path: ~/theos
+          key: theos-roothide-${{ runner.os }}-v6
+
+      # ── 4. Clone + Setup Theos (roothide) ────────────────────────
+      - name: 🛠 Tải & Setup Theos Roothide
+        if: steps.cache-theos.outputs.cache-hit != 'true'
+        run: |
+          git clone --recursive --depth=1 \
+            https://github.com/roothide/theos.git ~/theos
+
+      # ── 5. Cache iOS SDKs ─────────────────────────────────────────
+      - name: 💾 Cache iOS SDKs
+        id: cache-sdks
+        uses: actions/cache@v4
+        with:
+          path: ~/theos/sdks
+          key: ios-sdks-xybp888-${{ runner.os }}-v2
+
+      # ── 6. Download iOS SDKs ──────────────────────────────────────
+      - name: 🍎 Tải iOS SDK
+        if: steps.cache-sdks.outputs.cache-hit != 'true'
+        run: |
+          rm -rf ~/theos/sdks
+          git clone --depth=1 \
+            https://github.com/xybp888/iOS-SDKs.git ~/theos/sdks
+
+      # ── 7. Build ──────────────────────────────────────────────────
+      - name: 🚀 Build Tweak (Roothide)
+        run: |
+          export THEOS=~/theos
+          export THEOS_PACKAGE_SCHEME=roothide
+          export THEOS_MAKE_PATH="$THEOS/makefiles"
+          export PATH="$THEOS/bin:$PATH"
+          make clean
+          make package FINALPACKAGE=1 -j$(sysctl -n hw.ncpu)
+
+      # ── 8. Upload DEB ─────────────────────────────────────────────
+      - name: 📤 Upload DEB
+        uses: actions/upload-artifact@v4
+        with:
+          name: WeatVCamera-roothide-${{ github.sha }}
+          path: packages/*.deb
+          if-no-files-found: error
+
+      # ── 9. Release khi push tag v* ────────────────────────────────
+      - name: 🏷️ Create Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: packages/*.deb
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
